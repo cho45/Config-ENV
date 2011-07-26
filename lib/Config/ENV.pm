@@ -14,7 +14,7 @@ sub import {
 		no strict 'refs';
 		push @{"$package\::ISA"}, __PACKAGE__;
 
-		for my $method (qw/common config/) {
+		for my $method (qw/common config parent/) {
 			*{"$package\::$method"} = \&{__PACKAGE__ . "::" . $method}
 		}
 
@@ -55,6 +55,11 @@ sub param {
 	$vals->{$name};
 }
 
+sub parent ($) {
+	my ($name) = @_;
+	%{ _data->{envs}->{$name} || {} };
+}
+
 sub env {
 	my ($package) = @_;
 	$ENV{_data($package)->{name}} || 'default';
@@ -71,7 +76,8 @@ Config::ENV - Various configs determined by %ENV
 
 =head1 SYNOPSIS
 
-  use Config::ENV 'PLACK_ENV';
+  use Config::ENV 'PLACK_ENV'; # use $ENV{PLACK_ENV} to determine configs
+
 
 
 =head1 DESCRIPTION
