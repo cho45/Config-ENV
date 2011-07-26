@@ -5,6 +5,60 @@ use warnings;
 
 our $VERSION = '0.01';
 
+sub import {
+	my $class   = shift;
+	my $package = caller(0);
+	my $name    = shift;
+
+	{
+		no strict 'refs';
+		push @{"$package\::ISA"}, __PACKAGE__;
+
+		for my $method (qw/common config/) {
+			*{"$package\::$method"} = \&{__PACKAGE__ . "::" . $method}
+		}
+
+		no warnings 'once';
+		${"$package\::data"} = +{
+			common => {},
+			envs => {},
+			name => $name,
+		};
+	};
+}
+
+sub _data {
+	my $package = shift || caller(1);
+	no strict 'refs';
+	${"$package\::data"};
+}
+
+sub common ($) {
+	my ($hash) = @_;
+	_data->{common} = $hash;
+}
+
+sub config ($$) {
+	my ($name, $hash) = @_;
+	_data->{envs}->{$name} = $hash;
+}
+
+sub param {
+	my ($package, $name, $hash) = @_;
+	my $data = _data($package);
+
+	my $vals = $data->{_merged}->{$package->env} ||= +{
+		%{ $data->{common} },
+		%{ $data->{envs}->{$package->env} || {} }
+	};
+
+	$vals->{$name};
+}
+
+sub env {
+	my ($package) = @_;
+	$ENV{_data($package)->{name}} || 'default';
+}
 
 1;
 __END__
@@ -13,11 +67,11 @@ __END__
 
 =head1 NAME
 
-Config::ENV - 
+Config::ENV - Various configs determined by %ENV
 
 =head1 SYNOPSIS
 
-  use Config::ENV;
+  use Config::ENV 'PLACK_ENV';
 
 
 =head1 DESCRIPTION
