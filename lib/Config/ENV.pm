@@ -43,6 +43,11 @@ sub config ($$) { ## no critic
 	_data->{envs}->{$name} = $hash;
 }
 
+sub parent ($) { ## no critic
+	my ($name) = @_;
+	%{ _data->{envs}->{$name} || {} };
+}
+
 sub param {
 	my ($package, $name, $hash) = @_;
 	my $data = _data($package);
@@ -53,11 +58,6 @@ sub param {
 	};
 
 	$vals->{$name};
-}
-
-sub parent ($) { ## no critic
-	my ($name) = @_;
-	%{ _data->{envs}->{$name} || {} };
 }
 
 sub env {
@@ -76,13 +76,39 @@ Config::ENV - Various config determined by %ENV
 
 =head1 SYNOPSIS
 
-  use Config::ENV 'PLACK_ENV'; # use $ENV{PLACK_ENV} to determine configs
+  package MyConfig;
+  
+  use Config::ENV 'PLACK_ENV'; # use $ENV{PLACK_ENV} to determine config
+  
+  common +{
+    name => 'foobar',
+  };
+  
+  config development => +{
+    dsn_user => 'dbi:mysql:dbname=user;host=localhost',
+  };
+  
+  config test => +{
+    dsn_user => 'dbi:mysql:dbname=user;host=localhost',
+  };
+  
+  config production => +{
+    dsn_user => 'dbi:mysql:dbname=user;host=127.0.0.254',
+  };
+  
+  config production_bot => +{
+    parent('production'),
+    bot => 1,
+  };
 
+  # Use it
 
+  use MyConfig;
+  MyConfig->param('dsn_user'); #=> ...
 
 =head1 DESCRIPTION
 
-Config::ENV is 
+Config::ENV is for switching various configurations by environment variable.
 
 =head1 AUTHOR
 
