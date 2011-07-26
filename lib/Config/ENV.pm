@@ -33,12 +33,12 @@ sub _data {
 	${"$package\::data"};
 }
 
-sub common ($) {
+sub common ($) { ## no critic
 	my ($hash) = @_;
 	_data->{common} = $hash;
 }
 
-sub config ($$) {
+sub config ($$) { ## no critic
 	my ($name, $hash) = @_;
 	_data->{envs}->{$name} = $hash;
 }
@@ -55,7 +55,7 @@ sub param {
 	$vals->{$name};
 }
 
-sub parent ($) {
+sub parent ($) { ## no critic
 	my ($name) = @_;
 	%{ _data->{envs}->{$name} || {} };
 }
@@ -72,7 +72,7 @@ __END__
 
 =head1 NAME
 
-Config::ENV - Various configs determined by %ENV
+Config::ENV - Various config determined by %ENV
 
 =head1 SYNOPSIS
 
