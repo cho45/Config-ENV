@@ -3,7 +3,7 @@ package Config::ENV;
 use strict;
 use warnings;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 sub import {
 	my $class   = shift;

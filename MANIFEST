@@ -27,3 +27,4 @@ META.yml
 README
 t/00_compile.t
 t/01_base.t
+t/02_inherit.t
