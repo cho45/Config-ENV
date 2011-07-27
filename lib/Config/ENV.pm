@@ -10,8 +10,8 @@ sub import {
 	my $package = caller(0);
 	my $name    = shift;
 
-	{
-		no strict 'refs';
+	no strict 'refs';
+	if ($name) {
 		push @{"$package\::ISA"}, __PACKAGE__;
 
 		for my $method (qw/common config parent/) {
@@ -24,7 +24,9 @@ sub import {
 			envs => {},
 			name => $name,
 		};
-	};
+	} else {
+		*{"$package\::config"} = sub () { $class };
+	}
 }
 
 sub _data {
@@ -49,7 +51,7 @@ sub parent ($) { ## no critic
 }
 
 sub param {
-	my ($package, $name, $hash) = @_;
+	my ($package, $name) = @_;
 	my $data = _data($package);
 
 	my $vals = $data->{_merged}->{$package->env} ||= +{

@@ -1,4 +1,5 @@
 package MyConfig;
+use strict;
 
 use Config::ENV 'FOO_ENV';
 
@@ -41,5 +42,15 @@ $ENV{FOO_ENV} = 'production_bot';
 
 is __PACKAGE__->param('dsn_user'), 'dbi:mysql:dbname=user;host=127.0.0.254';
 is __PACKAGE__->param('bot'), 1;
+
+
+package Foo;
+use strict;
+
+BEGIN { MyConfig->import };
+
+use Test::More;
+
+is config->param('name'), 'foobar', 'shorthand';
 
 done_testing;
