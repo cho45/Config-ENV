@@ -26,6 +26,8 @@ config production_bot => +{
 
 use Test::More;
 
+undef $ENV{FOO_ENV};
+
 is __PACKAGE__->env, 'default';
 is __PACKAGE__->param('name'), 'foobar';
 ok !__PACKAGE__->param('dsn_user');

@@ -9,6 +9,7 @@ sub import {
 	my $class   = shift;
 	my $package = caller(0);
 	my $name    = shift;
+	my %opts    = @_;
 
 	no strict 'refs';
 	if ($name) {
@@ -20,9 +21,10 @@ sub import {
 
 		no warnings 'once';
 		${"$package\::data"} = +{
-			common => {},
-			envs => {},
-			name => $name,
+			common  => {},
+			envs    => {},
+			name    => $name,
+			default => $opts{default} || 'default',
 		};
 	} else {
 		*{"$package\::config"} = sub () { $class };
@@ -64,7 +66,8 @@ sub param {
 
 sub env {
 	my ($package) = @_;
-	$ENV{_data($package)->{name}} || 'default';
+	my $data = _data($package);
+	$ENV{$data->{name}} || $data->{default};
 }
 
 1;
