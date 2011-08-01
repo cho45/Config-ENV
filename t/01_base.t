@@ -50,6 +50,7 @@ package Foo;
 use strict;
 
 BEGIN { MyConfig->import };
+sub config { 'MyConfig' }
 
 use Test::More;
 

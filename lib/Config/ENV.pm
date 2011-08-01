@@ -3,7 +3,7 @@ package Config::ENV;
 use strict;
 use warnings;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 sub import {
 	my $class   = shift;
@@ -26,8 +26,6 @@ sub import {
 			name    => $name,
 			default => $opts{default} || 'default',
 		};
-	} else {
-		*{"$package\::config"} = sub () { $class };
 	}
 }
 
