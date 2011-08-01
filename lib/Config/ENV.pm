@@ -25,6 +25,17 @@ sub import {
 			envs    => {},
 			name    => $name,
 			default => $opts{default} || 'default',
+			export  => $opts{export},
+		};
+
+		*{"$package\::import"} = sub {
+			my $class    = shift;
+			my $package2 = caller(0);
+			my %opts     = @_;
+			my $data = _data($package);
+			if (my $export = $opts{export} || $data->{export}) {
+				*{"$package2\::$export"} = sub () { $package };
+			}
 		};
 	}
 }
