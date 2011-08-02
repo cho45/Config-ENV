@@ -2,6 +2,7 @@
 
 	* 0.04: Remove config shorthand function.
 	* 0.05: Enable to export 'config' as any name.
+	* 0.06: Fix bug on merge data.
 
 2011-07-27  SATOH Hiroh <cho45@lowreal.net>
 
