@@ -54,6 +54,7 @@ sub common ($) { ## no critic
 sub config ($$) { ## no critic
 	my ($name, $hash) = @_;
 	_data->{envs}->{$name} = $hash;
+	undef _data->{_merged}->{$name};
 }
 
 sub parent ($) { ## no critic
