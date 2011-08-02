@@ -8,11 +8,12 @@ our $VERSION = '0.06';
 sub import {
 	my $class   = shift;
 	my $package = caller(0);
-	my $name    = shift;
-	my %opts    = @_;
 
 	no strict 'refs';
-	if ($name) {
+	if (__PACKAGE__ eq $class) {
+		my $name    = shift;
+		my %opts    = @_;
+
 		push @{"$package\::ISA"}, __PACKAGE__;
 
 		for my $method (qw/common config parent/) {
@@ -27,22 +28,19 @@ sub import {
 			default => $opts{default} || 'default',
 			export  => $opts{export},
 		};
-
-		*{"$package\::import"} = sub {
-			my $class    = shift;
-			my $package2 = caller(0);
-			my %opts     = @_;
-			my $data = _data($package);
-			if (my $export = $opts{export} || $data->{export}) {
-				*{"$package2\::$export"} = sub () { $package };
-			}
-		};
+	} else {
+		my %opts    = @_;
+		my $data = _data($class);
+		if (my $export = $opts{export} || $data->{export}) {
+			*{"$package\::$export"} = sub () { $class };
+		}
 	}
 }
 
 sub _data {
 	my $package = shift || caller(1);
 	no strict 'refs';
+	no warnings 'once';
 	${"$package\::data"};
 }
 
