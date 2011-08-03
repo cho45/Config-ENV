@@ -1,4 +1,6 @@
 BEGIN {
+	use inc::Module::Install;
+
 	my @mip = qw(
 		Module::Install::AuthorTests
 		Module::Install::Repository
@@ -18,7 +20,6 @@ BEGIN {
 	}
 };
 
-use inc::Module::Install;
 name 'Config-ENV';
 all_from 'lib/Config/ENV.pm';
 
