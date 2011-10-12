@@ -5,6 +5,7 @@ use Config::ENV 'FOO_ENV', default => 'development';
 
 
 use Test::More;
+use Test::Name::FromLine;
 
 undef $ENV{FOO_ENV};
 

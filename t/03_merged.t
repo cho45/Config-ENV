@@ -1,6 +1,7 @@
 package MyConfig;
 use strict;
 use Test::More;
+use Test::Name::FromLine;
 
 use Config::ENV 'FOO_ENV';
 

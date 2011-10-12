@@ -25,6 +25,7 @@ config production_bot => +{
 };
 
 use Test::More;
+use Test::Name::FromLine;
 
 undef $ENV{FOO_ENV};
 

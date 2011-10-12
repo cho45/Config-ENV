@@ -1,3 +1,7 @@
+2011-10-12  SATOH Hiroh <cho45@lowreal.net>
+
+	* 0.08: Implement 'local' function.
+
 2011-08-02  SATOH Hiroh <cho45@lowreal.net>
 
 	* 0.04: Remove config shorthand function.
