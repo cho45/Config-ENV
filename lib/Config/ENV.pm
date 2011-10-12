@@ -3,7 +3,9 @@ package Config::ENV;
 use strict;
 use warnings;
 
-our $VERSION = '0.07';
+use Carp;
+
+our $VERSION = '0.08';
 
 sub import {
 	my $class   = shift;
@@ -66,10 +68,26 @@ sub param {
 
 	my $vals = $data->{_merged}->{$package->env} ||= +{
 		%{ $data->{common} },
-		%{ $data->{envs}->{$package->env} || {} }
+		%{ $data->{envs}->{$package->env} || {} },
+		(map { %$_ } @{ $data->{_local} || []}),
 	};
 
 	$vals->{$name};
+}
+
+sub local {
+	my ($package, %hash) = @_;
+	not defined wantarray and croak "local returns guard object; Can't use in void context.";
+
+	my $data = _data($package);
+	$data->{_local} ||= [];
+	push @{ $data->{_local} }, \%hash;
+	undef $data->{_merged};
+
+	bless sub {
+		pop @{ $data->{_local} };
+		undef $data->{_merged};
+	}, 'Config::ENV::Local';
 }
 
 sub env {
@@ -77,6 +95,16 @@ sub env {
 	my $data = _data($package);
 	$ENV{$data->{name}} || $data->{default};
 }
+
+{
+	package
+		Config::ENV::Local;
+
+	sub DESTROY {
+		my $self = shift;
+		$self->();
+	}
+};
 
 1;
 __END__
@@ -122,6 +150,76 @@ Config::ENV - Various config determined by %ENV
 =head1 DESCRIPTION
 
 Config::ENV is for switching various configurations by environment variable.
+
+=head1 CONFIG DEFINITION
+
+use this module in your config package:
+
+  package MyConfig;
+  use Config::ENV 'FOO_ENV';
+
+  common +{
+    name => 'foobar',
+  };
+
+  config development => +{};
+  config production  => +{};
+
+  1;
+
+=over 4
+
+=item common($hash)
+
+Define common config. This $hash is merged with specific environment config.
+
+=item config($env, $hash);
+
+Define environment config. This $hash is just enabled in $env environment.
+
+=back
+
+=head2 EXPORT
+
+You can specify default export name in config class. If you specify 'exports' option as following:
+
+  package MyConfig;
+  use Config::ENV 'FOO_ENV', exports => 'config';
+
+  ...;
+
+and use it with 'config' function.
+
+  package Foobar;
+  use MyConfig; # exports 'config' function
+
+  config->param('...');
+
+=head1 METHODS
+
+=over 4
+
+=item config->param($name)
+
+Returns config variable named $name.
+
+=item $guard = config->local(%hash)
+
+This is for scope limited config. You can use this when you use other values in temporary. Returns guard object.
+
+  is config->param('name'), 'original value';
+  {
+    my $guard = config->local(name => 'localized');
+    is config->param('name'), 'localized';
+  };
+  is config->param('name'), 'original value';
+
+=item config->env
+
+Returns current environment name.
+
+
+=back
 
 =head1 AUTHOR
 

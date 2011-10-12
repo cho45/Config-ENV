@@ -36,6 +36,63 @@ DESCRIPTION
     Config::ENV is for switching various configurations by environment
     variable.
 
+CONFIG DEFINITION
+    use this module in your config package:
+
+      package MyConfig;
+      use Config::ENV 'FOO_ENV';
+
+      common +{
+        name => 'foobar',
+      };
+
+      config development => +{};
+      config production  => +{};
+
+      1;
+
+    common($hash)
+        Define common config. This $hash is merged with specific environment
+        config.
+
+    config($env, $hash);
+        Define environment config. This $hash is just enabled in $env
+        environment.
+
+  EXPORT
+    You can specify default export name in config class. If you specify
+    'exports' option as following:
+
+      package MyConfig;
+      use Config::ENV 'FOO_ENV', exports => 'config';
+
+      ...;
+
+    and use it with 'config' function.
+
+      package Foobar;
+      use MyConfig; # exports 'config' function
+
+      config->param('...');
+
+METHODS
+    config->param($name)
+        Returns config variable named $name.
+
+    $guard = config->local(%hash)
+        This is for scope limited config. You can use this when you use
+        other values in temporary. Returns guard object.
+
+          is config->param('name'), 'original value';
+          {
+            my $guard = config->local(name => 'localized');
+            is config->param('name'), 'localized';
+          };
+          is config->param('name'), 'original value';
+
+    config->env
+        Returns current environment name.
+
 AUTHOR
     cho45 <cho45@lowreal.net>
 
