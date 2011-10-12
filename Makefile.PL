@@ -24,9 +24,9 @@ all_from 'lib/Config/ENV.pm';
 
 requires 'Exporter::Lite';
 
-build_requires 'Test::More';
-build_requires 'Test::Fatal';
-build_requires 'Test::Name::FromLine';
+test_requires 'Test::More';
+test_requires 'Test::Fatal';
+test_requires 'Test::Name::FromLine';
 
 # Module::Install::AuthorTests
 author_tests('xt');

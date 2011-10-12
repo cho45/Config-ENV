@@ -10,16 +10,11 @@ inc/Module/Install/Makefile.pm
 inc/Module/Install/Metadata.pm
 inc/Module/Install/ReadmeFromPod.pm
 inc/Module/Install/Repository.pm
-inc/Module/Install/TestBase.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
-inc/Spiffy.pm
-inc/Test/Base.pm
-inc/Test/Base/Filter.pm
-inc/Test/Builder.pm
-inc/Test/Builder/Module.pm
+inc/Test/Fatal.pm
 inc/Test/More.pm
-inc/Test/Most.pm
+inc/Test/Name/FromLine.pm
 lib/Config/ENV.pm
 Makefile.PL
 MANIFEST			This list of files
@@ -30,3 +25,4 @@ t/01_base.t
 t/02_default.t
 t/02_inherit.t
 t/03_merged.t
+t/04_local.t
