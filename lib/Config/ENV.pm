@@ -62,8 +62,8 @@ sub parent ($) { ## no critic
 	%{ _data->{envs}->{$name} || {} };
 }
 
-sub param {
-	my ($package, $name) = @_;
+sub current {
+	my ($package) = @_;
 	my $data = _data($package);
 
 	my $vals = $data->{_merged}->{$package->env} ||= +{
@@ -71,8 +71,11 @@ sub param {
 		%{ $data->{envs}->{$package->env} || {} },
 		(map { %$_ } @{ $data->{_local} || []}),
 	};
+}
 
-	$vals->{$name};
+sub param {
+	my ($package, $name) = @_;
+	$package->current->{$name};
 }
 
 sub local {
@@ -218,6 +221,9 @@ This is for scope limited config. You can use this when you use other values in 
 
 Returns current environment name.
 
+=item config->current
+
+Returns current configuration as HashRef.
 
 =back
 

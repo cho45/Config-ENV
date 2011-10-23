@@ -93,6 +93,9 @@ METHODS
     config->env
         Returns current environment name.
 
+    config->current
+        Returns current configuration as HashRef.
+
 AUTHOR
     cho45 <cho45@lowreal.net>
 
