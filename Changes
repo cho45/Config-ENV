@@ -1,3 +1,7 @@
+2011-10-24  SATOH Hiroh <cho45@lowreal.net>
+
+	* 0.09: Implement 'current' method.
+
 2011-10-12  SATOH Hiroh <cho45@lowreal.net>
 
 	* 0.08: Implement 'local' function.
