@@ -18,7 +18,7 @@ sub import {
 
 		push @{"$package\::ISA"}, __PACKAGE__;
 
-		for my $method (qw/common config parent/) {
+		for my $method (qw/common config parent load/) {
 			*{"$package\::$method"} = \&{__PACKAGE__ . "::" . $method}
 		}
 
@@ -97,6 +97,23 @@ sub env {
 	my ($package) = @_;
 	my $data = _data($package);
 	$ENV{$data->{name}} || $data->{default};
+}
+
+sub load ($$) { ## no critic
+	my ($name, $filename) = @_;
+	my $hash = do "$filename";
+
+	croak $@ if $@;
+	croak $! || "$filename does not return true value." unless defined $hash;
+	unless (ref($hash) eq 'HASH') {
+		croak "$filename does not return HashRef.";
+	}
+
+	_data->{envs}->{$name} = {
+		%{_data->{envs}->{$name} || {}},
+		%$hash,
+	};
+	undef _data->{_merged}->{$name};
 }
 
 {
@@ -224,6 +241,11 @@ Returns current environment name.
 =item config->current
 
 Returns current configuration as HashRef.
+
+=item config->load($name, $filename))
+
+Loads config from C<$filename>, then overrides existing one for
+C<$name> as each keys match.
 
 =back
 
