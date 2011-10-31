@@ -1,3 +1,7 @@
+2011-10-31  SATOH Hiroh <cho45@lowreal.net>
+
+	* 0.10: Implement 'load' function.
+
 2011-10-24  SATOH Hiroh <cho45@lowreal.net>
 
 	* 0.09: Implement 'current' method.

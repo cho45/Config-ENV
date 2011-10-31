@@ -18,7 +18,7 @@ sub import {
 
 		push @{"$package\::ISA"}, __PACKAGE__;
 
-		for my $method (qw/common config parent/) {
+		for my $method (qw/common config parent load/) {
 			*{"$package\::$method"} = \&{__PACKAGE__ . "::" . $method}
 		}
 
@@ -55,6 +55,19 @@ sub config ($$) { ## no critic
 	my ($name, $hash) = @_;
 	_data->{envs}->{$name} = $hash;
 	undef _data->{_merged}->{$name};
+}
+
+sub load ($) {
+	my $filename = shift;
+	my $hash = do "$filename";
+
+	croak $@ if $@;
+	croak $! unless defined $hash;
+	unless (ref($hash) eq 'HASH') {
+		croak "$filename does not return HashRef.";
+	}
+
+	wantarray ? %$hash : $hash;
 }
 
 sub parent ($) { ## no critic
@@ -179,6 +192,27 @@ Define common config. This $hash is merged with specific environment config.
 =item config($env, $hash);
 
 Define environment config. This $hash is just enabled in $env environment.
+
+=item parent($env);
+
+Expand $env configuration to inherit it.
+
+=item load($filename);
+
+`do $filename` and expand it. This can be used following:
+
+  # MyConfig.pm
+  common +{
+    API_KEY => 'Set in config.pl',
+    API_SECRET => 'Set in config.pl',
+    load('config.pl),
+  };
+
+  # config.pl
+  +{
+    API_KEY => 'XFATEAFAFASG',
+    API_SECRET => 'ced3a7927fcf22cba72c2559326be2b8e3f14a0f',
+  }
 
 =back
 
