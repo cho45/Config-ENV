@@ -1,4 +1,3 @@
-.gitignore
 Changes
 inc/Module/Install.pm
 inc/Module/Install/AuthorTests.pm
@@ -26,3 +25,9 @@ t/02_default.t
 t/02_inherit.t
 t/03_merged.t
 t/04_local.t
+t/05_load.t
+t/data/development.pl
+t/data/no_values.pl
+t/data/parse_error.pl
+t/data/test.pl
+t/data/valid.pl

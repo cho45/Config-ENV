@@ -59,6 +59,25 @@ CONFIG DEFINITION
         Define environment config. This $hash is just enabled in $env
         environment.
 
+    parent($env);
+        Expand $env configuration to inherit it.
+
+    load($filename);
+        `do $filename` and expand it. This can be used following:
+
+          # MyConfig.pm
+          common +{
+            API_KEY => 'Set in config.pl',
+            API_SECRET => 'Set in config.pl',
+            load('config.pl),
+          };
+
+          # config.pl
+          +{
+            API_KEY => 'XFATEAFAFASG',
+            API_SECRET => 'ced3a7927fcf22cba72c2559326be2b8e3f14a0f',
+          }
+
   EXPORT
     You can specify default export name in config class. If you specify
     'exports' option as following:
