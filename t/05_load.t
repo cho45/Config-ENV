@@ -5,8 +5,9 @@ use Config::ENV 'FOO_ENV';
 use Test::More;
 use Test::Name::FromLine;
 use Test::Fatal;
+use Errno ();
 
-like exception { load('unknown_file') }, qr/No such file or directory/;
+is int(do{local ($!, $@); eval{ load('unknown_file') }; $!}), Errno::ENOENT;
 like exception { load('t/data/parse_error.pl') }, qr{syntax error at t/data/parse_error.pl line 2, near ";;"};
 like exception { load('t/data/no_values.pl') }, qr{t/data/no_values.pl does not return HashRef.};
 is exception { load('t/data/valid.pl') }, undef;
