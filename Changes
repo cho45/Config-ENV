@@ -1,3 +1,7 @@
+2012-03-08  SATOH Hiroh <cho45@lowreal.net>
+
+	* 0.11: Fix test (by Songmu).
+
 2011-10-31  SATOH Hiroh <cho45@lowreal.net>
 
 	* 0.10: Implement 'load' function.

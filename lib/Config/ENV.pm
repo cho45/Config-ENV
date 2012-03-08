@@ -5,7 +5,7 @@ use warnings;
 
 use Carp;
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 sub import {
 	my $class   = shift;
