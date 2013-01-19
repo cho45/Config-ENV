@@ -112,6 +112,12 @@ sub env {
 	$ENV{$data->{name}} || $data->{default};
 }
 
+sub env_names {
+	my ($package) = @_;
+	my $data = _data($package);
+	[ grep { $_ ne $data->{default} } keys %{ $data->{envs} } ];
+}
+
 {
 	package
 		Config::ENV::Local;
@@ -234,7 +240,7 @@ and use it with 'config' function.
 
 =head1 METHODS
 
-=over 4
+=over 5
 
 =item config->param($name)
 
@@ -258,6 +264,10 @@ Returns current environment name.
 =item config->current
 
 Returns current configuration as HashRef.
+
+=item config->env_names
+
+Returns defined environment names as ArrayRef.
 
 =back
 
