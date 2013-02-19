@@ -218,10 +218,10 @@ Expand $env configuration to inherit it.
 
 =head2 EXPORT
 
-You can specify default export name in config class. If you specify 'exports' option as following:
+You can specify default export name in config class. If you specify 'export' option as following:
 
   package MyConfig;
-  use Config::ENV 'FOO_ENV', exports => 'config';
+  use Config::ENV 'FOO_ENV', export => 'config';
 
   ...;
 

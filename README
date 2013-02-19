@@ -80,10 +80,10 @@ CONFIG DEFINITION
 
   EXPORT
     You can specify default export name in config class. If you specify
-    'exports' option as following:
+    'export' option as following:
 
       package MyConfig;
-      use Config::ENV 'FOO_ENV', exports => 'config';
+      use Config::ENV 'FOO_ENV', export => 'config';
 
       ...;
 
