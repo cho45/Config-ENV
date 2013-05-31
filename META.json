@@ -1,0 +1,74 @@
+{
+   "abstract" : "Various config determined by %ENV",
+   "author" : [
+      "cho45 <cho45@lowreal.net>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Minilla/v0.4.5, CPAN::Meta::Converter version 2.131490",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Config-ENV",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "xt",
+         "inc",
+         "share",
+         "eg",
+         "examples",
+         "author"
+      ]
+   },
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.36",
+            "Test::Fatal" : "0",
+            "Test::More" : "0",
+            "Test::Name::FromLine" : "0"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "CPAN::Meta" : "0",
+            "CPAN::Meta::Prereqs" : "0",
+            "Module::Build" : "0.38"
+         }
+      },
+      "develop" : {
+         "requires" : {
+            "Test::CPAN::Meta" : "0",
+            "Test::MinimumVersion" : "0.10108",
+            "Test::Pod" : "1.41",
+            "Test::Spellunker" : "v0.2.7"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Exporter::Lite" : "0"
+         }
+      }
+   },
+   "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/cho45/Config-ENV/issues"
+      },
+      "homepage" : "https://github.com/cho45/Config-ENV",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/cho45/Config-ENV.git",
+         "web" : "https://github.com/cho45/Config-ENV"
+      }
+   },
+   "version" : "0.12",
+   "x_contributors" : [
+      "Masayuki Matsuki <y.songmu@gmail.com>",
+      "ysasaki <aloelight@gmail.com>"
+   ]
+}
