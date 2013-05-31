@@ -57,7 +57,7 @@ sub config ($$) { ## no critic
 	undef _data->{_merged}->{$name};
 }
 
-sub load ($) {
+sub load ($) { ## no critic
 	my $filename = shift;
 	my $hash = do "$filename";
 
