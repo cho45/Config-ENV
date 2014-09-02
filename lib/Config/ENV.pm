@@ -60,9 +60,10 @@ sub config ($$) { ## no critic
 sub load ($) { ## no critic
 	my $filename = shift;
 	my $hash = do "$filename";
+	my $errno = $!;
 
 	croak $@ if $@;
-	croak $! unless defined $hash;
+	croak $errno unless defined $hash;
 	unless (ref($hash) eq 'HASH') {
 		croak "$filename does not return HashRef.";
 	}
