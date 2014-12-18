@@ -6,30 +6,24 @@ Config::ENV - Various config determined by %ENV
 
     package MyConfig;
     
-
     use Config::ENV 'PLACK_ENV'; # use $ENV{PLACK_ENV} to determine config
     
-
     common +{
       name => 'foobar',
     };
     
-
     config development => +{
       dsn_user => 'dbi:mysql:dbname=user;host=localhost',
     };
     
-
     config test => +{
       dsn_user => 'dbi:mysql:dbname=user;host=localhost',
     };
     
-
     config production => +{
       dsn_user => 'dbi:mysql:dbname=user;host=127.0.0.254',
     };
     
-
     config production_bot => +{
       parent('production'),
       bot => 1,

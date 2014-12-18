@@ -1,3 +1,11 @@
+Revision history for Perl extension Teng
+
+{{$NEXT}}
+
+0.13 2014-12-18T04:53:27Z
+        - FIX: A returning error in `load` (by issm)
+        - FIX: Skipping test perlcritic (by issm)
+
 2013-02-19  SATOH Hiroh <cho45@lowreal.net>
 
 	* 0.12: Fix docs (by ysasak)
