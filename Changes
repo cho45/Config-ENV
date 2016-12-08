@@ -1,6 +1,9 @@
-Revision history for Perl extension Teng
+Revision history for Perl extension Config-ENV
 
 {{$NEXT}}
+
+0.14 2016-12-08T10:57:00Z
+	- FIX: Avoid following warning "Constants from lexical variables potentially modified elsewhere are deprecated"
 
 0.13 2014-12-18T04:53:27Z
         - FIX: A returning error in `load` (by issm)

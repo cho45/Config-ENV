@@ -4,7 +4,7 @@
       "cho45 <cho45@lowreal.net>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v2.1.1, CPAN::Meta::Converter version 2.141520",
+   "generated_by" : "Minilla/v3.0.2, CPAN::Meta::Converter version 2.141520",
    "license" : [
       "perl_5"
    ],
@@ -36,7 +36,7 @@
       },
       "configure" : {
          "requires" : {
-            "Module::Build" : "0.38"
+            "Module::Build::Tiny" : "0.035"
          }
       },
       "develop" : {
@@ -66,7 +66,7 @@
          "web" : "https://github.com/cho45/Config-ENV"
       }
    },
-   "version" : "0.13",
+   "version" : "0.14",
    "x_contributors" : [
       "Masayuki Matsuki <y.songmu@gmail.com>",
       "ysasaki <aloelight@gmail.com>",
