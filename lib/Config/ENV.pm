@@ -34,7 +34,7 @@ sub import {
 		my %opts    = @_;
 		my $data = _data($class);
 		if (my $export = $opts{export} || $data->{export}) {
-			*{"$package\::$export"} = sub () { $class };
+			*{"$package\::$export"} = sub { $class };
 		}
 	}
 }
