@@ -29,6 +29,7 @@ sub import {
 			name    => $name,
 			default => $opts{default} || 'default',
 			export  => $opts{export},
+			_local  => [],
 		};
 	} else {
 		my %opts    = @_;
@@ -82,7 +83,7 @@ sub current {
 	my $vals = $data->{_merged}->{$package->env} ||= +{
 		%{ $data->{common} },
 		%{ $data->{envs}->{$package->env} || {} },
-		(map { %$_ } @{ $data->{_local} || []}),
+		(map { %$_ } @{ $data->{_local} }),
 	};
 }
 
@@ -96,12 +97,20 @@ sub local {
 	not defined wantarray and croak "local returns guard object; Can't use in void context.";
 
 	my $data = _data($package);
-	$data->{_local} ||= [];
 	push @{ $data->{_local} }, \%hash;
 	undef $data->{_merged};
 
 	bless sub {
-		pop @{ $data->{_local} };
+		%hash = ();
+
+		# cleanup $data->{_local}
+		my $threshold;
+		for my $i (reverse 0..$#{ $data->{_local} }) {
+			last if %{ $data->{_local}->[$i] };
+			$threshold = $i;
+		}
+		splice @{ $data->{_local} }, -(@{ $data->{_local} } - $threshold) if defined $threshold;
+
 		undef $data->{_merged};
 	}, 'Config::ENV::Local';
 }
