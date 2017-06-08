@@ -76,7 +76,7 @@ is config->param('name'), 'foobar';
 
 	undef $guard2;
 	is config->param('name'), 'localized3';
-	is @{ config->_data->{_local} }, 3 if $ENV{AUTHOR_TESTING};
+	is @{ config->_data->{_local} }, 2 if $ENV{AUTHOR_TESTING};
 
 	undef $guard3;
 	is config->param('name'), 'localized1';

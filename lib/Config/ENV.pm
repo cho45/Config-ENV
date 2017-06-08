@@ -101,16 +101,7 @@ sub local {
 	undef $data->{_merged};
 
 	bless sub {
-		%hash = ();
-
-		# cleanup $data->{_local}
-		my $threshold;
-		for my $i (reverse 0..$#{ $data->{_local} }) {
-			last if %{ $data->{_local}->[$i] };
-			$threshold = $i;
-		}
-		splice @{ $data->{_local} }, -(@{ $data->{_local} } - $threshold) if defined $threshold;
-
+		@{ $data->{_local} } = grep { $_ != \%hash } @{ $data->{_local} };
 		undef $data->{_merged};
 	}, 'Config::ENV::Local';
 }
