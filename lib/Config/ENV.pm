@@ -61,7 +61,8 @@ sub config ($$) { ## no critic
 
 sub load ($) { ## no critic
 	my $filename = shift;
-	my $hash = do File::Spec->catfile('.', $filename);
+	$filename = File::Spec->catfile('.', $filename) unless File::Spec->file_name_is_absolute($filename);
+	my $hash = do "$filename";
 
 	croak $@ if $@;
 	croak $^E unless defined $hash;
