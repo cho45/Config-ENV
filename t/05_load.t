@@ -9,6 +9,7 @@ use Errno ();
 use File::Spec;
 
 is int(do{local ($!, $@); eval{ load('unknown_file') }; $!}), Errno::ENOENT;
+like exception { load('unknown_file') }, qr{No such file or directory};
 like exception { load('t/data/parse_error.pl') }, qr{syntax error at ./t/data/parse_error.pl line 2, near ";;"};
 like exception { load('t/data/no_values.pl') }, qr{\At/data/no_values.pl does not return HashRef.};
 is exception { load('t/data/valid.pl') }, undef;
