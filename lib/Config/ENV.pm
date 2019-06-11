@@ -68,7 +68,7 @@ sub load ($) { ## no critic
 	my $hash = do "$explicit_filename";
 
 	croak $@ if $@;
-	croak $^E unless defined $hash;
+	croak "$^E" unless defined $hash;
 	unless (ref($hash) eq 'HASH') {
 		croak "$filename does not return HashRef.";
 	}
