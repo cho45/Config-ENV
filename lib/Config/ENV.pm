@@ -61,11 +61,14 @@ sub config ($$) { ## no critic
 
 sub load ($) { ## no critic
 	my $filename = shift;
-	$filename = File::Spec->catfile('.', $filename) unless File::Spec->file_name_is_absolute($filename);
-	my $hash = do "$filename";
+
+	# Workaround: convert implied relative path to explicit path for CVE-2016-1238 (. in @INC removal)
+	my $explicit_filename = $filename;
+	$explicit_filename = File::Spec->catfile('.', $filename) unless File::Spec->file_name_is_absolute($filename);
+	my $hash = do "$explicit_filename";
 
 	croak $@ if $@;
-	croak $^E unless defined $hash;
+	croak "$^E" unless defined $hash;
 	unless (ref($hash) eq 'HASH') {
 		croak "$filename does not return HashRef.";
 	}
